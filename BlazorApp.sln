@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. SRC", "4. SRC", "{2A1538
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Solution Items", "2. Solution Items", "{6B398A53-81D7-43B5-9442-06E78038D31B}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\create-test-report.yml = .github\workflows\create-test-report.yml
 		.github\dependabot.yml = .github\dependabot.yml
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\formatting.yml = .github\workflows\formatting.yml
