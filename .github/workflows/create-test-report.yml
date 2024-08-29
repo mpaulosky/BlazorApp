@@ -7,6 +7,9 @@ on:
       - completed
 permissions: {}
 
+env:
+   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   test-results:
     name: Test Results

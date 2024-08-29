@@ -27,10 +27,19 @@ on:
 jobs:
   build:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+
     env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_NOLOGO: true
+      DOTNET_GENERATE_ASPNET_CERTIFICATE: false
+      DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
+      DOTNET_MULTILEVEL_LOOKUP: 0
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       BUILD_CONFIG: 'Release'
       SOLUTION: 'BlazorApp.sln'
-      
+      TEST-RESULTS: '*/Test Results/**/*.trx'
+
     permissions:
       checks: write
       pull-requests: write
@@ -57,16 +66,21 @@ jobs:
         run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
 
       - name: Unit Test
-        run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build
 
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+      - name: Upload Event File
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
+          name: Event File
+          path: ${{ github.event_path }}
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test Results
+          path: |
+            /**/Test Results/**/*.trx
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.10.2
@@ -78,16 +92,3 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0.10.2
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
-
-      # - name: Codecov
-      #   uses: codecov/codecov-action@v4.5.0
-
-      # - name: Upload dotnet test results
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: BlazorApp-test-results
-      #     path: TestResults
-
-        # Use always() to always run this step to
-        # publish test results when there are test failures
-        if: ${{ always() }}
