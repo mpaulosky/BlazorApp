@@ -67,7 +67,7 @@ jobs:
         with:
           name: Test Results
           path: |
-            test-results/*.trx
+            **/test-results/*.trx
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.10.2
