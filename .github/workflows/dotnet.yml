@@ -67,7 +67,7 @@ jobs:
         with:
           name: Test Results
           path: |
-            test-results/*.xml
+            test-results/*.trx
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.10.2
@@ -80,7 +80,7 @@ jobs:
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
 
-      # - name: Codecov
+      # #- name: Codecov
       #   uses: codecov/codecov-action@v4.5.0
 
       # - name: Upload dotnet test results
