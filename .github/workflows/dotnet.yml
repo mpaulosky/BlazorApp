@@ -55,9 +55,15 @@ jobs:
       - name: Unit Test
         run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --settings runsettings.xml
 
-      - name: Test Report
-        uses: dorny/test-reporter@v1
+      - name: "Event File"
+        uses: actions/upload-artifact@v4
+        with:
+          name: Event File
+          path: ${{ github.event_path }}
+
+      - name: Upload Test Results
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: DotNET Tests
           path: TestResults
@@ -77,7 +83,6 @@ jobs:
 
       - name: Codecov
         uses: codecov/codecov-action@v4.5.0
-
       - name: Upload dotnet test results
         uses: actions/upload-artifact@v4
         with:
