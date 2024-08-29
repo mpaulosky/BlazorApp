@@ -27,7 +27,12 @@ on:
 jobs:
   build:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    env:
+      BUILD_CONFIG: 'Release'
+      SOLUTION: 'BlazorApp.sln'
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,26 +43,31 @@ jobs:
         with:
           global-json-file: ./Global.json
 
-      - name: Cache NuGet Packages
-        id: nuget-packages
-        uses: actions/cache@v4
-        env:
-          cache-name: nuget-package-cache
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-${{ env.cache-name }}
-
       - name: Workload install
         run: dotnet workload restore
     
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore $SOLUTION
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
 
       - name: Unit Test
-        run: dotnet test --configuration Release --no-restore --no-build --settings runsettings.xml
+        run: dotnet test --configuration $BUILD_CONFIG  --no-restore --logger "trx;LogFileName=test-results.trx" || true
+
+      - name: "Event File"
+        uses: actions/upload-artifact@v4
+        with:
+          name: Event File
+          path: ${{ github.event_path }}
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test Results
+          path: |
+            test-results/*.xml
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.10.2
@@ -70,14 +80,14 @@ jobs:
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
 
-      - name: Codecov
-        uses: codecov/codecov-action@v4.5.0
+      # - name: Codecov
+      #   uses: codecov/codecov-action@v4.5.0
 
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: BlazorApp-test-results
-          path: TestResults
+      # - name: Upload dotnet test results
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: BlazorApp-test-results
+      #     path: TestResults
 
         # Use always() to always run this step to
         # publish test results when there are test failures
