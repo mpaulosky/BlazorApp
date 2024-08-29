@@ -30,6 +30,10 @@ jobs:
     env:
       BUILD_CONFIG: 'Release'
       SOLUTION: 'BlazorApp.sln'
+      
+    permissions:
+      checks: write
+      pull-requests: write
 
     runs-on: ubuntu-latest
 
@@ -53,22 +57,17 @@ jobs:
         run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
 
       - name: Unit Test
-        run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --settings runsettings.xml
+        run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --logger "trx;LogFileName=test-results.trx"
 
-      - name: "Event File"
-        uses: actions/upload-artifact@v4
-        with:
-          name: Event File
-          path: ${{ github.event_path }}
-
-      - name: Upload Test Results
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: DotNET Tests
-          path: TestResults
-          reporter: dotnet-xml
-          fail-on-error: true
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.10.2
@@ -81,13 +80,14 @@ jobs:
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
 
-      - name: Codecov
-        uses: codecov/codecov-action@v4.5.0
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: BlazorApp-test-results
-          path: TestResults
+      # - name: Codecov
+      #   uses: codecov/codecov-action@v4.5.0
+
+      # - name: Upload dotnet test results
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: BlazorApp-test-results
+      #     path: TestResults
 
         # Use always() to always run this step to
         # publish test results when there are test failures
