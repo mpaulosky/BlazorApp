@@ -8,10 +8,7 @@
 // =============================================
 
 using System.Diagnostics;
-using System.Security.Claims;
-
 using BlazorApp.Client;
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
@@ -23,54 +20,54 @@ namespace BlazorApp;
 
 internal sealed class PersistingServerAuthenticationStateProvider : ServerAuthenticationStateProvider, IDisposable
 {
-	private readonly IdentityOptions _options;
-	private readonly PersistentComponentState _state;
+	private readonly IdentityOptions _Options;
+	private readonly PersistentComponentState _State;
 
-	private readonly PersistingComponentStateSubscription _subscription;
+	private readonly PersistingComponentStateSubscription _Subscription;
 
-	private Task<AuthenticationState>? _authenticationStateTask;
+	private Task<AuthenticationState>? _AuthenticationStateTask;
 
 	public PersistingServerAuthenticationStateProvider(
 		PersistentComponentState persistentComponentState,
 		IOptions<IdentityOptions> optionsAccessor)
 	{
-		_state = persistentComponentState;
-		_options = optionsAccessor.Value;
+		_State = persistentComponentState;
+		_Options = optionsAccessor.Value;
 
 		AuthenticationStateChanged += OnAuthenticationStateChanged;
-		_subscription = _state.RegisterOnPersisting(OnPersistingAsync, RenderMode.InteractiveAuto);
+		_Subscription = _State.RegisterOnPersisting(OnPersistingAsync, RenderMode.InteractiveAuto);
 	}
 
 	public void Dispose()
 	{
-		_subscription.Dispose();
+		_Subscription.Dispose();
 		AuthenticationStateChanged -= OnAuthenticationStateChanged;
 	}
 
 	private void OnAuthenticationStateChanged(Task<AuthenticationState> task)
 	{
-		_authenticationStateTask = task;
+		_AuthenticationStateTask = task;
 	}
 
 	private async Task OnPersistingAsync()
 	{
-		if (_authenticationStateTask is null)
+		if (_AuthenticationStateTask is null)
 		{
 			throw new UnreachableException($"Authentication state not set in {nameof(OnPersistingAsync)}().");
 		}
 
-		AuthenticationState authenticationState = await _authenticationStateTask;
-		ClaimsPrincipal principal = authenticationState.User;
+		var authenticationState = await _AuthenticationStateTask;
+		var principal = authenticationState.User;
 
 		if (principal.Identity?.IsAuthenticated == true)
 		{
-			string? userId = principal.FindFirst(_options.ClaimsIdentity.UserIdClaimType)?.Value;
-			string? email = principal.FindFirst(_options.ClaimsIdentity.EmailClaimType)?.Value;
-			IEnumerable<Claim> roles = principal.FindAll(_options.ClaimsIdentity.RoleClaimType);
+			var userId = principal.FindFirst(_Options.ClaimsIdentity.UserIdClaimType)?.Value;
+			var email = principal.FindFirst(_Options.ClaimsIdentity.EmailClaimType)?.Value;
+			var roles = principal.FindAll(_Options.ClaimsIdentity.RoleClaimType);
 			if (userId != null)
 			{
-				_state.PersistAsJson(nameof(UserInfo),
-					new UserInfo { UserId = userId, Email = email, Roles = roles.Select(r => r.Value).ToArray() });
+				_State.PersistAsJson(nameof(UserInfo),
+					new UserInfo { UserId = userId, Email = email!, Roles = roles.Select(r => r.Value).ToArray() });
 			}
 		}
 	}
