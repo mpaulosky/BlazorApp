@@ -83,21 +83,25 @@ jobs:
             /**/Test Results/**/*.trx
 
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.10.2
+        uses: gittools/actions/gitversion/setup@v3.0.0
         with:
           versionSpec: "5.x"
 
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v0.10.2
+        uses: gittools/actions/gitversion/execute@v3.0.0
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
 
-      - name: Codecov
-        uses: codecov/codecov-action@v4.5.0
+      # - name: Codecov
+      #   uses: codecov/codecov-action@v4.5.0
 
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: BlazorApp-test-results
-          path: TestResults
+      # - name: Upload dotnet test results
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: BlazorApp-test-results
+      #     path: TestResults
+
+        # Use always() to always run this step to
+        # publish test results when there are test failures
+        if: ${{ always() }}
