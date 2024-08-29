@@ -55,14 +55,19 @@ jobs:
       - name: Unit Test
         run: dotnet test --configuration $BUILD_CONFIG  --no-restore --logger "trx;LogFileName=test-results.trx" || true
 
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: always()
+      - name: "Event File"
+        uses: actions/upload-artifact@v4
         with:
-          name: DotNET Tests
-          path: "**/test-results.trx"
-          reporter: dotnet-trx
-          fail-on-error: true
+          name: Event File
+          path: ${{ github.event_path }}
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test Results
+          path: |
+            test-results/*.xml
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.10.2
