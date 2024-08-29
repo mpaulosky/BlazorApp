@@ -14,14 +14,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Solution Items", "1. Sol
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		LICENSE.txt = LICENSE.txt
+		codecov.yml = codecov.yml
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		Global.json = Global.json
+		LICENSE.md = LICENSE.md
 		README.md = README.md
+		REFERENCES.md = REFERENCES.md
+		runsettings.xml = runsettings.xml
+		SECURITY.md = SECURITY.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. SRC Solution Items", "2. SRC Solution Items", "{416F6404-F5B5-41CD-96AD-E652ED5FD2DA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. SRC Solution Items", "3. SRC Solution Items", "{416F6404-F5B5-41CD-96AD-E652ED5FD2DA}"
 	ProjectSection(SolutionItems) = preProject
 		src\.editorconfig = src\.editorconfig
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. SRC", "4. SRC", "{2A153823-0DCB-43D9-ACF2-AABC60C0CC5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Solution Items", "2. Solution Items", "{6B398A53-81D7-43B5-9442-06E78038D31B}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\formatting.yml = .github\workflows\formatting.yml
+		.github\workflows\todos-to-issues.yml = .github\workflows\todos-to-issues.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp.Unit.Tests", "src\Tests\BlazorApp.Unit.Tests\BlazorApp.Unit.Tests.csproj", "{E667A6A3-58B9-4162-9083-F311BD933E26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Tests", "5. Tests", "{37D1D94D-9A81-4EBD-A1D7-52B88CEC3D07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,9 +62,19 @@ Global
 		{50806263-6C07-4793-BE56-256DB17580E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50806263-6C07-4793-BE56-256DB17580E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50806263-6C07-4793-BE56-256DB17580E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E667A6A3-58B9-4162-9083-F311BD933E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E667A6A3-58B9-4162-9083-F311BD933E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E667A6A3-58B9-4162-9083-F311BD933E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E667A6A3-58B9-4162-9083-F311BD933E26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD8F0FA3-9216-4741-ABDD-6A32A6AA0520} = {2A153823-0DCB-43D9-ACF2-AABC60C0CC5F}
+		{8C3ADE5C-704E-40C0-B9D2-005540E6B0E3} = {2A153823-0DCB-43D9-ACF2-AABC60C0CC5F}
+		{50806263-6C07-4793-BE56-256DB17580E7} = {2A153823-0DCB-43D9-ACF2-AABC60C0CC5F}
+		{E667A6A3-58B9-4162-9083-F311BD933E26} = {37D1D94D-9A81-4EBD-A1D7-52B88CEC3D07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5F039D1-E4D7-4934-9E6F-29C8EAAE1433}
