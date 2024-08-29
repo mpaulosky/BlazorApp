@@ -45,7 +45,7 @@ jobs:
           echo "dotnet_diagnostic.IDE0009.severity = error" >> src/.editorconfig # this and Me preferences
       - name: Setup .NET
         if: steps.changed_cs.outputs.files != ''
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
       - name: Run dotnet format
