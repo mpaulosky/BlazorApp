@@ -101,7 +101,3 @@ jobs:
         with:
           name: BlazorApp-test-results
           path: TestResults
-
-        # Use always() to always run this step to
-        # publish test results when there are test failures
-        if: ${{ always() }}
