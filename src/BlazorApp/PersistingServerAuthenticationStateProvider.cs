@@ -8,7 +8,7 @@
 // =============================================
 
 using System.Diagnostics;
-using BlazorApp.Client;
+using BlazorApp.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
@@ -21,6 +21,7 @@ namespace BlazorApp;
 internal sealed class PersistingServerAuthenticationStateProvider : ServerAuthenticationStateProvider, IDisposable
 {
 	private readonly IdentityOptions _Options;
+
 	private readonly PersistentComponentState _State;
 
 	private readonly PersistingComponentStateSubscription _Subscription;
@@ -61,13 +62,15 @@ internal sealed class PersistingServerAuthenticationStateProvider : ServerAuthen
 
 		if (principal.Identity?.IsAuthenticated == true)
 		{
+			var userName = principal.FindFirst(_Options.ClaimsIdentity.UserNameClaimType)?.Value;
 			var userId = principal.FindFirst(_Options.ClaimsIdentity.UserIdClaimType)?.Value;
 			var email = principal.FindFirst(_Options.ClaimsIdentity.EmailClaimType)?.Value;
 			var roles = principal.FindAll(_Options.ClaimsIdentity.RoleClaimType);
 			if (userId != null)
 			{
 				_State.PersistAsJson(nameof(UserInfo),
-					new UserInfo { UserId = userId, Email = email!, Roles = roles.Select(r => r.Value).ToArray() });
+					new UserInfo
+						{ UserName = userName, UserId = userId, Email = email!, Roles = roles.Select(r => r.Value).ToArray() });
 			}
 		}
 	}
