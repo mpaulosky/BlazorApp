@@ -9,6 +9,8 @@
 
 using System.Security.Claims;
 
+using BlazorApp.Shared.Models;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -23,7 +25,7 @@ internal class PersistentAuthenticationStateProvider : AuthenticationStateProvid
 
 	public PersistentAuthenticationStateProvider(PersistentComponentState state)
 	{
-		bool foundState = !state.TryTakeFromJson<UserInfo>(nameof(UserInfo), out UserInfo? userInfo);
+		var foundState = !state.TryTakeFromJson<UserInfo>(nameof(UserInfo), out var userInfo);
 		if (foundState || userInfo is null)
 		{
 			return;
@@ -35,7 +37,7 @@ internal class PersistentAuthenticationStateProvider : AuthenticationStateProvid
 		claims.Add(new Claim(ClaimTypes.Name, userInfo.Email ?? ""));
 		claims.Add(new Claim(ClaimTypes.Email, userInfo.Email ?? ""));
 
-		foreach (string role in userInfo.Roles)
+		foreach (var role in userInfo.Roles)
 		{
 			claims.Add(new Claim(ClaimTypes.Role, role));
 		}
