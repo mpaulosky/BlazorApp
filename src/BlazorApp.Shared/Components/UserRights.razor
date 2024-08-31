@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@using System.Globalization
+
+<AuthorizeView>
+	<h1>Hi @context.User.Identity!.Name, you have these claims and rights:</h1>
+</AuthorizeView>
+<ul>
+	<AuthorizeView>
+		@foreach (var claim in @context.User.FindAll(x => x.Type != ClaimTypes.Name && x.Type != ClaimTypes.Role))
+		{
+			<li>@GetClaimName(claim): @claim.Value</li>
+		}
+	</AuthorizeView>
+
+	<AuthorizeView Roles="user">
+		<li>You have the role USER</li>
+	</AuthorizeView> 
+	
+	<AuthorizeView Roles="admin">
+		<li>You have the role ADMIN</li>
+	</AuthorizeView>
+
+	<AuthorizeView Policy="content-editor">
+		<li>You are a CONTENT EDITOR</li>
+	</AuthorizeView>
+
+	<AuthorizeView>
+		@if(context.User.Identity?.AuthenticationType == "custom-auth-type")
+		{
+			<li>You have the authentication type CUSTOM AUTH TYPE</li>
+		}
+	</AuthorizeView>
+</ul>
+
+@code 
+{
+	private static string GetClaimName(Claim claim)
+	{
+		var claimType = new Uri(claim.Type);
+		var name = claimType.Segments.Last();
+		return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name);
+	}
+}
