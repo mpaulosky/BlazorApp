@@ -1,11 +1,22 @@
+// ============================================
+// Copyright (c) 2024. All rights reserved.
+// File Name :     CounterTests.cs
+// Company :       mpaulosky
+// Author :        Matthew Paulosky
+// Solution Name : BlazorApp
+// Project Name :  BlazorApp.Unit.Tests
+// =============================================
+
+using System.Diagnostics.CodeAnalysis;
 using BlazorApp.Shared.Pages;
 
-namespace BlazorApp.Unit.Tests;
+namespace BlazorApp.Unit.Tests.Pages;
 
 /// <summary>
 /// These tests are written entirely in C#.
 /// Learn more at https://bunit.dev/docs/getting-started/writing-tests.html#creating-basic-tests-in-cs-files
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class CounterTests : TestContext
 {
 	[Fact]
