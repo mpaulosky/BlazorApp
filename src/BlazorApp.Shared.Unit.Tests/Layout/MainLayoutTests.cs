@@ -4,16 +4,16 @@
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazorApp
-// Project Name :  BlazorApp.Unit.Tests
+// Project Name :  BlazorApp.Shared.Unit.Tests
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
+
 using BlazorApp.Client;
 using BlazorApp.Shared.BogusFakes;
-using BlazorApp.Shared.Layout;
 using BlazorApp.Shared.Security;
 
-namespace BlazorApp.Unit.Tests.Layout;
+namespace BlazorApp.Shared.Layout;
 
 [ExcludeFromCodeCoverage]
 public class MainLayoutTests : TestContext
@@ -45,12 +45,6 @@ public class MainLayoutTests : TestContext
 			          <a href="counter" class="nav-link">
 			            <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true" ></span>
 			            Counter
-			          </a>
-			        </div>
-			        <div class="nav-item px-3" >
-			          <a href="weather" class="nav-link">
-			            <span class="bi bi-list-nested-nav-menu" aria-hidden="true" ></span>
-			            Weather
 			          </a>
 			        </div>
 			      </nav>

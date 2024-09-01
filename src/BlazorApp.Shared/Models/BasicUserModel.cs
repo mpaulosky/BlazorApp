@@ -16,7 +16,7 @@ namespace BlazorApp.Shared.Models;
 public class BasicUserModel
 {
 	/// <summary>
-	///   Initializes a new instance of the <see cref="BasicUserModel" /> class.
+	///  Initializes a new instance of the <see cref="BasicUserModel" /> class.
 	/// </summary>
 	public BasicUserModel()
 	{
@@ -59,7 +59,7 @@ public class BasicUserModel
 	/// <value>
 	/// The user name.
 	/// </value>
-	public string UserName { get; set; }
+	public string UserName { get; set; } = null!;
 
 	/// <summary>
 	///   Gets the identifier.
@@ -84,5 +84,5 @@ public class BasicUserModel
 	/// <valure>
 	///   The Roles
 	/// </valure>
-	public string[] Roles { get; init; } = Array.Empty<string>();
+	public string[] Roles { get; init; } = [];
 }

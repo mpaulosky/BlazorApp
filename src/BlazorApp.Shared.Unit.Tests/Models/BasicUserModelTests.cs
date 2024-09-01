@@ -4,15 +4,14 @@
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazorApp
-// Project Name :  BlazorApp.Unit.Tests
+// Project Name :  BlazorApp.Shared.Unit.Tests
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
 using BlazorApp.Shared.BogusFakes;
-using BlazorApp.Shared.Models;
 using FluentAssertions;
 
-namespace BlazorApp.Unit.Tests.Models;
+namespace BlazorApp.Shared.Models;
 
 [ExcludeFromCodeCoverage]
 public class BasicUserModelTests

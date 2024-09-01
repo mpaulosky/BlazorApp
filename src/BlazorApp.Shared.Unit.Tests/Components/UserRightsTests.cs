@@ -4,14 +4,13 @@
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazorApp
-// Project Name :  BlazorApp.Unit.Tests
+// Project Name :  BlazorApp.Shared.Unit.Tests
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
-using BlazorApp.Shared.Components;
 
-namespace BlazorApp.Unit.Tests.Components;
+namespace BlazorApp.Shared.Components;
 
 [ExcludeFromCodeCoverage]
 public class UserRightsTests : TestContext

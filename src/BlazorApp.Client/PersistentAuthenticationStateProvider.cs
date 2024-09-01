@@ -7,6 +7,7 @@
 // Project Name :  BlazorApp.Client
 // =============================================
 
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 
 using BlazorApp.Shared.Models;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BlazorApp.Client;
 
+[ExcludeFromCodeCoverage]
 internal class PersistentAuthenticationStateProvider : AuthenticationStateProvider
 {
 	private static readonly Task<AuthenticationState> defaultUnauthenticatedTask =
