@@ -8,7 +8,10 @@
 // =============================================
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
 using BlazorApp.Shared.Models;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
@@ -18,6 +21,7 @@ using Microsoft.Extensions.Options;
 
 namespace BlazorApp;
 
+[ExcludeFromCodeCoverage]
 internal sealed class PersistingServerAuthenticationStateProvider : ServerAuthenticationStateProvider, IDisposable
 {
 	private readonly IdentityOptions _Options;
@@ -70,7 +74,7 @@ internal sealed class PersistingServerAuthenticationStateProvider : ServerAuthen
 			{
 				_State.PersistAsJson(nameof(UserInfo),
 					new UserInfo
-						{ UserName = userName, UserId = userId, Email = email!, Roles = roles.Select(r => r.Value).ToArray() });
+					{ UserName = userName!, UserId = userId, Email = email!, Roles = roles.Select(r => r.Value).ToArray() });
 			}
 		}
 	}

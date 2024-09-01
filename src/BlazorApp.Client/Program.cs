@@ -14,7 +14,7 @@ using BlazorApp.Shared.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddSingleton<IBlazorTestService, ClientTestService>();
 

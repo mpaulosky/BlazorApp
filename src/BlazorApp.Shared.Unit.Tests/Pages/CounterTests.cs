@@ -4,13 +4,12 @@
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazorApp
-// Project Name :  BlazorApp.Unit.Tests
+// Project Name :  BlazorApp.Shared.Unit.Tests
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
-using BlazorApp.Shared.Pages;
 
-namespace BlazorApp.Unit.Tests.Pages;
+namespace BlazorApp.Shared.Pages;
 
 /// <summary>
 /// These tests are written entirely in C#.

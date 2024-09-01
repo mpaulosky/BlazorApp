@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
 
-WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -39,7 +39,7 @@ builder.Services
 		options.ClientId = builder.Configuration["Auth0:ClientId"] ?? "";
 	});
 
-WebApplication? app = builder.Build();
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -66,7 +66,7 @@ app.MapRazorComponents<App>()
 
 app.MapGet("account/login", async (string returnUrl, HttpContext context) =>
 {
-	AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
+	var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
 		.WithRedirectUri(returnUrl)
 		.Build();
 	await context.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
@@ -74,7 +74,7 @@ app.MapGet("account/login", async (string returnUrl, HttpContext context) =>
 
 app.MapGet("authentication/logout", async (HttpContext context) =>
 {
-	AuthenticationProperties authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
+	var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
 		.WithRedirectUri("/")
 		.Build();
 	await context.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);

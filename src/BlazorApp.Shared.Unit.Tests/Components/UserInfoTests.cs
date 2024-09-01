@@ -4,13 +4,12 @@
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazorApp
-// Project Name :  BlazorApp.Unit.Tests
+// Project Name :  BlazorApp.Shared.Unit.Tests
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
-using BlazorApp.Shared.Components;
 
-namespace BlazorApp.Unit.Tests.Components;
+namespace BlazorApp.Shared.Components;
 
 [ExcludeFromCodeCoverage]
 public class UserInfoTests : TestContext
@@ -52,9 +51,11 @@ public class UserInfoTests : TestContext
 		authContext.SetAuthorizing();
 
 		// Act
+
 		var cut = RenderComponent<UserInfo>();
 
 		// Assert
+
 		cut.MarkupMatches(expected);
 	}
 

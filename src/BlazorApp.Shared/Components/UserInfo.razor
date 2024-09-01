@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-@if (isAuthenticated)
+@if (_isAuthenticated)
 {
-	<h1>Welcome @userName</h1>
+	<h1>Welcome @_userName</h1>
 }
-@if (!isAuthenticated)
+@if (!_isAuthenticated)
 {
 	<h1>Please log in!</h1>
 }
@@ -22,13 +22,13 @@
 </AuthorizeView>
 @code
 {
-	bool isAuthenticated = false;
-	string userName;
+	bool _isAuthenticated;
+	string? _userName;
 
 	protected override async Task OnParametersSetAsync()
 	{
 		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-		isAuthenticated = state.User.Identity.IsAuthenticated;
-		userName = state.User.Identity.Name;    
+		_isAuthenticated = state.User.Identity!.IsAuthenticated;
+		_userName = state.User.Identity.Name!;    
 	}
 }

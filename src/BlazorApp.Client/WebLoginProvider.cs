@@ -13,15 +13,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorApp.Client;
 
-public class WebLoginProvider : ILoginProvider
+public class WebLoginProvider(NavigationManager navMan) : ILoginProvider
 {
-	private readonly NavigationManager navMan;
-
-	public WebLoginProvider(NavigationManager navMan)
-	{
-		this.navMan = navMan;
-	}
-
 	public Task LoginAsync()
 	{
 		navMan.NavigateTo("Account/Login?returnUrl=/", true);
