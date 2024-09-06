@@ -21,8 +21,8 @@ public class UserInfoTests : TestContext
 
 		const string expected =
 			"""
-			<h1>Please log in!</h1>
-			<p>State: Not authorized</p>
+			<p>Please log in!</p>
+
 			""";
 
 		this.AddTestAuthorization();
@@ -43,8 +43,7 @@ public class UserInfoTests : TestContext
 
 		const string expected =
 			"""
-				<h1>Please log in!</h1>
-				<p>State: Authorizing</p>
+			<p>State: Authorizing</p>
 			""";
 
 		var authContext = this.AddTestAuthorization();
@@ -66,8 +65,7 @@ public class UserInfoTests : TestContext
 
 		const string expected =
 			"""
-				<h1>Welcome TEST USER</h1>
-				<p>State: Not authorized</p>
+			<p>Please log in!</p>
 			""";
 
 		var authContext = this.AddTestAuthorization();
@@ -87,8 +85,7 @@ public class UserInfoTests : TestContext
 
 		const string expected =
 			"""
-				<h1>Welcome TEST USER</h1>
-				<p>State: Authorized</p>
+			<p>Welcome TEST USER</p>
 			""";
 
 		var authContext = this.AddTestAuthorization();

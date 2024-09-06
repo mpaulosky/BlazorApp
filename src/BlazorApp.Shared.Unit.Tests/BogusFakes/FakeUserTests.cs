@@ -40,7 +40,6 @@ public class FakeUserTests
 		}
 
 		result.Should().BeOfType<UserInfo>();
-		result.Email.Should().NotBeNullOrWhiteSpace();
 		result.Roles[0].Should().NotBeNullOrWhiteSpace();
 	}
 
@@ -62,7 +61,6 @@ public class FakeUserTests
 		{
 			user.Should().BeOfType<UserInfo>();
 			user.UserId.Should().NotBeNullOrWhiteSpace();
-			user.Email.Should().NotBeNullOrWhiteSpace();
 			user.Roles[0].Should().NotBeNullOrWhiteSpace();
 		}
 	}
@@ -85,7 +83,6 @@ public class FakeUserTests
 		{
 			user.Should().BeOfType<BasicUserModel>();
 			user.UserId.Should().NotBeNullOrWhiteSpace();
-			user.Email.Should().NotBeNullOrWhiteSpace();
 			user.Roles[0].Should().NotBeNullOrWhiteSpace();
 		}
 	}

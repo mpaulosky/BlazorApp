@@ -8,6 +8,7 @@
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
+
 using BlazorApp.Shared.Services;
 
 namespace BlazorApp.Shared.Pages;
@@ -25,8 +26,15 @@ public class HomeTests : TestContext
 			<h1>Hello, world!</h1>
 			Welcome to your new app.
 			<p>Hello from Blazor Server!</p>
+			<ul>
+			  <li>Hi TEST USER, you have these claims and rights:</li>
+			</ul>
 			""";
+
 		Services.AddSingleton<IBlazorTestService, ServerTestService>();
+		var authContext = this.AddTestAuthorization();
+		authContext.SetAuthorized("TEST USER");
+		authContext.SetRoles("admin", "user");
 
 		//Act
 
@@ -47,7 +55,15 @@ public class HomeTests : TestContext
 			<h1>Hello, world!</h1>
 			Welcome to your new app.
 			<p>Hello from Blazor Client!</p>
+			<ul>
+			  <li>Hi TEST USER, you have these claims and rights:</li>
+			</ul>
 			""";
+
+		var authContext = this.AddTestAuthorization();
+		authContext.SetAuthorized("TEST USER");
+		authContext.SetRoles("admin", "user");
+
 		Services.AddSingleton<IBlazorTestService, ClientTestService>();
 
 		//Act

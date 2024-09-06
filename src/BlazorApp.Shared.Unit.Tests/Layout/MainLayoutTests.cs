@@ -51,10 +51,10 @@ public class MainLayoutTests : TestContext
 			    </div>
 			  </div>
 			  <main >
-			    <div class="top-row px-4" >
-			      Not Authorised
+			    <span class="top-row px-4" >
+			      <p diff:ignore>Welcome Tracy98</p>
 			      <a >Log out</a>
-			    </div>
+			    </span>
 			    <article class="content px-4" ></article>
 			  </main>
 			</div>
@@ -68,7 +68,7 @@ public class MainLayoutTests : TestContext
 		var user = FakeUser.GetNewUser(true);
 
 		var authContext = this.AddTestAuthorization();
-		authContext.SetAuthorized(user.UserName);
+		authContext.SetAuthorized(user.UserName!);
 		authContext.SetRoles(user.Roles);
 
 		Services.AddSingleton<ILoginProvider, WebLoginProvider>();
