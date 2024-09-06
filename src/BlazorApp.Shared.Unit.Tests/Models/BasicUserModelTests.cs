@@ -8,7 +8,9 @@
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
+
 using BlazorApp.Shared.BogusFakes;
+
 using FluentAssertions;
 
 namespace BlazorApp.Shared.Models;
@@ -33,7 +35,6 @@ public class BasicUserModelTests
 		result.Should().NotBeNull();
 		result.UserName.Should().Be(user.UserName);
 		result.UserId.Should().Be(user.UserId);
-		result.Email.Should().Be(user.Email);
 		result.Roles.Should().BeEquivalentTo(user.Roles);
 	}
 
@@ -46,14 +47,13 @@ public class BasicUserModelTests
 
 		//Act
 
-		var result = new BasicUserModel(user.UserName, user.UserId, user.Email, user.Roles);
+		var result = new BasicUserModel(user.UserName, user.UserId, user.Roles);
 
 		//Assert
 
 		result.Should().NotBeNull();
 		result.UserName.Should().Be(user.UserName);
 		result.UserId.Should().Be(user.UserId);
-		result.Email.Should().Be(user.Email);
 		result.Roles.Should().BeEquivalentTo(user.Roles);
 	}
 }

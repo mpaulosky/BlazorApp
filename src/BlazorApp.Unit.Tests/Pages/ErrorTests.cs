@@ -8,10 +8,9 @@
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
-
 using BlazorApp.Components.Pages;
 
-namespace BlazorApp.Unit.Tests.Pages;
+namespace BlazorApp.Pages;
 
 [ExcludeFromCodeCoverage]
 public class ErrorTests : TestContext

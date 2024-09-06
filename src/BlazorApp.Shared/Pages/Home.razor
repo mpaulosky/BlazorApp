@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using BlazorApp.Shared.Services
+@using BlazorApp.Shared.Components
 @inject IBlazorTestService TestService
 
 
@@ -10,3 +11,5 @@
 Welcome to your new app.
 
 <p>@TestService.GetMessage()</p>
+
+<UserRights />

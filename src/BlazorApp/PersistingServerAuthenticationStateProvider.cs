@@ -66,15 +66,24 @@ internal sealed class PersistingServerAuthenticationStateProvider : ServerAuthen
 
 		if (principal.Identity?.IsAuthenticated == true)
 		{
-			var userName = principal.FindFirst(_Options.ClaimsIdentity.UserNameClaimType)?.Value;
+			var userName = principal.Identity.Name;
+
 			var userId = principal.FindFirst(_Options.ClaimsIdentity.UserIdClaimType)?.Value;
-			var email = principal.FindFirst(_Options.ClaimsIdentity.EmailClaimType)?.Value;
-			var roles = principal.FindAll(_Options.ClaimsIdentity.RoleClaimType);
+
+			var rolesClaims = principal.FindAll(_Options.ClaimsIdentity.RoleClaimType);
+
 			if (userId != null)
 			{
+				var roles = new List<string>();
+
+				foreach (var role in rolesClaims)
+				{
+					roles.Add(role.Value);
+				}
+
 				_State.PersistAsJson(nameof(UserInfo),
 					new UserInfo
-					{ UserName = userName!, UserId = userId, Email = email!, Roles = roles.Select(r => r.Value).ToArray() });
+					{ UserName = userName, UserId = userId, Roles = roles.ToArray() });
 			}
 		}
 	}

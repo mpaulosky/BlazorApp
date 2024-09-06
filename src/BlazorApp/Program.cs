@@ -26,10 +26,7 @@ builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents()
 	.AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddSingleton<IBlazorTestService, ServerTestService>();
-
 builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<ILoginProvider, WebLoginProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
 builder.Services
 	.AddAuth0WebAppAuthentication(options =>
@@ -38,6 +35,9 @@ builder.Services
 		;
 		options.ClientId = builder.Configuration["Auth0:ClientId"] ?? "";
 	});
+
+builder.Services.AddSingleton<IBlazorTestService, ServerTestService>();
+builder.Services.AddScoped<ILoginProvider, WebLoginProvider>();
 
 var app = builder.Build();
 
@@ -61,8 +61,8 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
 	.AddInteractiveWebAssemblyRenderMode()
+	.AddAdditionalAssemblies(typeof(BlazorApp.Client._Imports).Assembly)
 	.AddAdditionalAssemblies(typeof(BlazorApp.Shared._Imports).Assembly);
-
 
 app.MapGet("account/login", async (string returnUrl, HttpContext context) =>
 {
@@ -80,6 +80,5 @@ app.MapGet("authentication/logout", async (HttpContext context) =>
 	await context.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
 	await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 });
-
 
 app.Run();

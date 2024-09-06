@@ -8,8 +8,11 @@
 // =============================================
 
 using BlazorApp.Shared.Models;
+
 using Bogus;
+
 using MongoDB.Bson;
+
 using static BlazorApp.Shared.Enum.Enums;
 
 namespace BlazorApp.Shared.BogusFakes;
@@ -81,7 +84,6 @@ public static class FakeUser
 		return new Faker<UserInfo>()
 			.RuleFor((UserInfo x) => x.UserId, new BsonObjectId(ObjectId.GenerateNewId()).ToString())
 			.RuleFor((UserInfo x) => x.UserName, person.UserName)
-			.RuleFor((UserInfo x) => x.Email, person.Email)
 			.RuleFor((UserInfo x) => x.Roles, f => new[] { f.Random.Enum<Roles>().ToString() })
 			.UseSeed(seed);
 	}

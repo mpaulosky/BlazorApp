@@ -17,7 +17,7 @@ using RichardSzalay.MockHttp;
 
 using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 
-namespace BlazorApp.Unit.Tests.Helpers;
+namespace BlazorApp.Helpers;
 
 [ExcludeFromCodeCoverage]
 public static class MockHttpClientBunitHelpers

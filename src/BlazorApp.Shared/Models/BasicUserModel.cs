@@ -30,7 +30,6 @@ public class BasicUserModel
 	{
 		UserName = user.UserName;
 		UserId = user.UserId;
-		Email = user.Email;
 		Roles = user.Roles;
 	}
 
@@ -39,17 +38,14 @@ public class BasicUserModel
 	/// </summary>
 	/// <param name="userName"></param>
 	/// <param name="userId"></param>
-	/// <param name="email"></param>
 	/// <param name="roles"></param>
 	public BasicUserModel(
-		string userName,
+		string? userName,
 		string userId,
-		string email,
 		string[] roles) : this()
 	{
 		UserName = userName;
 		UserId = userId;
-		Email = email;
 		Roles = roles;
 	}
 
@@ -59,7 +55,7 @@ public class BasicUserModel
 	/// <value>
 	/// The user name.
 	/// </value>
-	public string UserName { get; set; } = null!;
+	public string? UserName { get; set; } = null!;
 
 	/// <summary>
 	///   Gets the identifier.
@@ -69,14 +65,6 @@ public class BasicUserModel
 	/// </value>
 	public string UserId { get; init; } = string.Empty;
 
-
-	/// <summary>
-	///   Gets or sets the email address.
-	/// </summary>
-	/// <value>
-	///   The email address.
-	/// </value>
-	public string Email { get; init; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the Roles

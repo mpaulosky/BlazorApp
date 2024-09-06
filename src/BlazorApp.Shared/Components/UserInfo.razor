@@ -1,23 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-@if (_isAuthenticated)
-{
-	<h1>Welcome @_userName</h1>
-}
-@if (!_isAuthenticated)
-{
-	<h1>Please log in!</h1>
-}
 <AuthorizeView>
 	<Authorized>
-		<p>State: Authorized</p>
+		<p>Welcome @_userName</p>
 	</Authorized>
 	<Authorizing>
 		<p>State: Authorizing</p>
 	</Authorizing>
 	<NotAuthorized>
-		<p>State: Not authorized</p>
+		<p>Please log in!</p>
 	</NotAuthorized>
 </AuthorizeView>
 @code
@@ -29,6 +21,6 @@
 	{
 		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 		_isAuthenticated = state.User.Identity!.IsAuthenticated;
-		_userName = state.User.Identity.Name!;    
+		_userName = state.User.Identity?.Name!;
 	}
 }

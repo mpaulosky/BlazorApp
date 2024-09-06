@@ -1,44 +1,36 @@
 @using Microsoft.AspNetCore.Components.Authorization
-@using System.Security.Claims
-@using System.Globalization
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<AuthorizeView>
-	<h1>Hi @context.User.Identity!.Name, you have these claims and rights:</h1>
-</AuthorizeView>
 <ul>
 	<AuthorizeView>
-		@foreach (var claim in @context.User.FindAll(x => x.Type != ClaimTypes.Name && x.Type != ClaimTypes.Role))
-		{
-			<li>@GetClaimName(claim): @claim.Value</li>
-		}
+		<Authorized>
+			<li>Hi @_userName, you have these claims and rights:</li>
+		</Authorized>
 	</AuthorizeView>
 
-	<AuthorizeView Roles="user">
+	<AuthorizeView Roles="User">
 		<li>You have the role USER</li>
-	</AuthorizeView> 
-	
-	<AuthorizeView Roles="admin">
+	</AuthorizeView>
+
+	<AuthorizeView Roles="Admin">
 		<li>You have the role ADMIN</li>
 	</AuthorizeView>
 
-	<AuthorizeView Policy="content-editor">
-		<li>You are a CONTENT EDITOR</li>
-	</AuthorizeView>
-
-	<AuthorizeView>
-		@if(context.User.Identity?.AuthenticationType == "custom-auth-type")
-		{
-			<li>You have the authentication type CUSTOM AUTH TYPE</li>
-		}
+	<AuthorizeView Roles="Author">
+		<li>You are a AUTHOR</li>
 	</AuthorizeView>
 </ul>
 
-@code 
+@code
 {
-	private static string GetClaimName(Claim claim)
+	bool _isAuthenticated;
+	string? _userName;
+
+
+	protected override async Task OnParametersSetAsync()
 	{
-		var claimType = new Uri(claim.Type);
-		var name = claimType.Segments.Last();
-		return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name);
+		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		_isAuthenticated = state.User.Identity!.IsAuthenticated;
+		_userName = state.User.Identity?.Name!;
 	}
 }
