@@ -9,9 +9,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
-
 using BlazorApp.Shared.Models;
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -20,10 +18,10 @@ namespace BlazorApp.Client;
 [ExcludeFromCodeCoverage]
 internal class PersistentAuthenticationStateProvider : AuthenticationStateProvider
 {
-	private static readonly Task<AuthenticationState> defaultUnauthenticatedTask =
+	private static readonly Task<AuthenticationState> _defaultUnauthenticatedTask =
 		Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity())));
 
-	private readonly Task<AuthenticationState> authenticationStateTask = defaultUnauthenticatedTask;
+	private readonly Task<AuthenticationState> _AuthenticationStateTask = _defaultUnauthenticatedTask;
 
 	public PersistentAuthenticationStateProvider(PersistentComponentState state)
 	{
@@ -36,21 +34,20 @@ internal class PersistentAuthenticationStateProvider : AuthenticationStateProvid
 		List<Claim> claims = new();
 
 		claims.Add(new Claim(ClaimTypes.NameIdentifier, userInfo.UserId));
-		claims.Add(new Claim(ClaimTypes.Name, userInfo.Email ?? ""));
-		claims.Add(new Claim(ClaimTypes.Email, userInfo.Email ?? ""));
+		claims.Add(new Claim(ClaimTypes.Name, userInfo.UserName!));
 
 		foreach (var role in userInfo.Roles)
 		{
 			claims.Add(new Claim(ClaimTypes.Role, role));
 		}
 
-		authenticationStateTask = Task.FromResult(
+		_AuthenticationStateTask = Task.FromResult(
 			new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims,
 				nameof(PersistentAuthenticationStateProvider)))));
 	}
 
 	public override Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
-		return authenticationStateTask;
+		return _AuthenticationStateTask;
 	}
 }
