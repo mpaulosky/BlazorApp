@@ -52,7 +52,7 @@ public class MainLayoutTests : TestContext
 			  </div>
 			  <main >
 			    <span class="top-row px-4" >
-			      <p diff:ignore>Welcome Tracy98</p>
+			      <span class="authorized" diff:ignore>Welcome Gregory.Ziemann</span>
 			      <a >Log out</a>
 			    </span>
 			    <article class="content px-4" ></article>
