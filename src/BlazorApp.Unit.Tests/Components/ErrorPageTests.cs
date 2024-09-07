@@ -1,6 +1,6 @@
-﻿// ============================================
+// ============================================
 // Copyright (c) 2024. All rights reserved.
-// File Name :     ErrorTests.cs
+// File Name :     ErrorPageTests.cs
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazorApp
@@ -8,19 +8,21 @@
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
+
 using BlazorApp.Components.Pages;
 
-namespace BlazorApp.Pages;
+using Microsoft.AspNetCore.Http;
+
+namespace BlazorApp.Components;
 
 [ExcludeFromCodeCoverage]
-public class ErrorTests : TestContext
+public class ErrorPageTests : TestContext
 {
 	[Fact]
-	public void ErrorComponentRendersCorrectly()
+	public void ErrorPage_With_NoError_Should_DisplaysDefaultErrorMessage_Test()
 	{
 		// Arrange
-
-		var expected =
+		const string expected =
 			"""
 			<h1 class="text-danger">Error.</h1>
 			<h2 class="text-danger">An error occurred while processing your request.</h2>
@@ -42,12 +44,16 @@ public class ErrorTests : TestContext
 			</p>
 			""";
 
-		// Act
+		var httpContextAccessor = new HttpContextAccessor
+		{
+			HttpContext = new DefaultHttpContext()
+		};
+		Services.AddSingleton<IHttpContextAccessor>(httpContextAccessor);
 
+		// Act
 		var cut = RenderComponent<Error>();
 
 		// Assert
-
 		cut.MarkupMatches(expected);
 	}
 }
