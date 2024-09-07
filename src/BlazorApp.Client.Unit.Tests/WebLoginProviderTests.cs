@@ -7,12 +7,14 @@
 // Project Name :  BlazorApp.Client.Unit.Tests
 // =============================================
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 using FluentAssertions;
 
 namespace BlazorApp.Client;
 
+[ExcludeFromCodeCoverage]
 public class WebLoginProviderTests : TestContext
 {
 	[Fact]
