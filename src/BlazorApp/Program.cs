@@ -7,17 +7,10 @@
 // Project Name :  BlazorApp
 // =============================================
 
-using Auth0.AspNetCore.Authentication;
-
-using BlazorApp;
-using BlazorApp.Client;
-using BlazorApp.Components;
-using BlazorApp.Shared.Security;
-using BlazorApp.Shared.Services;
+using BlazorApp.Extensions;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +19,10 @@ builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents()
 	.AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddSingleton<IBlazorTestService, ServerTestService>();
+
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<ILoginProvider, WebLoginProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
 builder.Services
 	.AddAuth0WebAppAuthentication(options =>
@@ -38,9 +34,6 @@ builder.Services
 
 builder.Services.AddSingleton<IBlazorTestService, ServerTestService>();
 builder.Services.AddScoped<ILoginProvider, WebLoginProvider>();
-
-var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -61,8 +54,11 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
 	.AddInteractiveWebAssemblyRenderMode()
-	.AddAdditionalAssemblies(typeof(BlazorApp.Client._Imports).Assembly)
 	.AddAdditionalAssemblies(typeof(BlazorApp.Shared._Imports).Assembly);
+
+
+
+app.AddAppSettings();
 
 app.MapGet("account/login", async (string returnUrl, HttpContext context) =>
 {
