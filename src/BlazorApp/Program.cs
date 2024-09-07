@@ -7,62 +7,19 @@
 // Project Name :  BlazorApp
 // =============================================
 
-using Auth0.AspNetCore.Authentication;
-
-using BlazorApp;
-using BlazorApp.Client;
-using BlazorApp.Components;
-using BlazorApp.Shared.Security;
-using BlazorApp.Shared.Services;
+using BlazorApp.Extensions;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-	.AddInteractiveServerComponents()
-	.AddInteractiveWebAssemblyComponents();
-
-builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
-builder.Services
-	.AddAuth0WebAppAuthentication(options =>
-	{
-		options.Domain = builder.Configuration["Auth0:Authority"] ?? "";
-		;
-		options.ClientId = builder.Configuration["Auth0:ClientId"] ?? "";
-	});
-
-builder.Services.AddSingleton<IBlazorTestService, ServerTestService>();
-builder.Services.AddScoped<ILoginProvider, WebLoginProvider>();
+builder.ConfigureServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-	app.UseWebAssemblyDebugging();
-}
-else
-{
-	app.UseExceptionHandler("/Error", true);
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-	app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-app.UseAntiforgery();
-
-app.MapRazorComponents<App>()
-	.AddInteractiveServerRenderMode()
-	.AddInteractiveWebAssemblyRenderMode()
-	.AddAdditionalAssemblies(typeof(BlazorApp.Client._Imports).Assembly)
-	.AddAdditionalAssemblies(typeof(BlazorApp.Shared._Imports).Assembly);
+app.AddAppSettings();
 
 app.MapGet("account/login", async (string returnUrl, HttpContext context) =>
 {
