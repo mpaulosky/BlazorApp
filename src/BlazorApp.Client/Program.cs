@@ -8,6 +8,8 @@
 // =============================================
 
 using BlazorApp.Client;
+using BlazorApp.Shared.Security;
+using BlazorApp.Shared.Services;
 
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -22,5 +24,9 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddSingleton<ILoginProvider, WebLoginProvider>();
 
 builder.Services.AddSingleton<AuthenticationStateProvider, PersistentAuthenticationStateProvider>();
+
+builder.Services.AddSingleton<IBlazorTestService, ClientTestService>();
+
+builder.Services.AddSingleton<ILoginProvider, WebLoginProvider>();
 
 await builder.Build().RunAsync();
