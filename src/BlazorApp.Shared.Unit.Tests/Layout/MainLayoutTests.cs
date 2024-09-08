@@ -51,8 +51,8 @@ public class MainLayoutTests : TestContext
 			    </div>
 			  </div>
 			  <main >
-			    <div class="top-row px-4" >
-			      Not Authorised
+			    <span class="top-row px-4" >
+			      <span class="authorized" diff:ignore>Welcome Salvatore.Emard38</span>
 			      <a >Log out</a>
 			    </span>
 			    <article class="content px-4" ></article>
