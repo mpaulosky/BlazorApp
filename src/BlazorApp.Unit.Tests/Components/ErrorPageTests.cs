@@ -8,7 +8,6 @@
 // =============================================
 
 using System.Diagnostics.CodeAnalysis;
-
 using BlazorApp.Components.Pages;
 
 using Microsoft.AspNetCore.Http;

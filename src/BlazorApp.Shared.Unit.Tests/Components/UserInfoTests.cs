@@ -65,6 +65,7 @@ public class UserInfoTests : TestContext
 		const string expected =
 			"""
 			<span class="umauthorized">Please log in!</span>
+
 			""";
 
 		var authContext = this.AddTestAuthorization();
