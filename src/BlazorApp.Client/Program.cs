@@ -13,14 +13,18 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.Services.AddSingleton<IBlazorTestService, ClientTestService>();
-
+<<<<<<<<< Temporary merge branch 1
 builder.Services.AddAuthorizationCore();
 
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddSingleton<ILoginProvider, WebLoginProvider>();
-
 builder.Services.AddSingleton<AuthenticationStateProvider, PersistentAuthenticationStateProvider>();
+=========
+builder.ConfigureClientServices();
+>>>>>>>>> Temporary merge branch 2
+
+builder.Services.AddSingleton<IBlazorTestService, ClientTestService>();
+
+builder.Services.AddSingleton<ILoginProvider, WebLoginProvider>();
 
 await builder.Build().RunAsync();

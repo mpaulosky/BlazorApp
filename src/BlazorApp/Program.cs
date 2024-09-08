@@ -15,48 +15,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-	.AddInteractiveServerComponents()
-	.AddInteractiveWebAssemblyComponents();
+builder.ConfigureServices();
 
-builder.Services.AddSingleton<IBlazorTestService, ServerTestService>();
-
-builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<ILoginProvider, WebLoginProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
-builder.Services
-	.AddAuth0WebAppAuthentication(options =>
-	{
-		options.Domain = builder.Configuration["Auth0:Authority"] ?? "";
-		;
-		options.ClientId = builder.Configuration["Auth0:ClientId"] ?? "";
-	});
-
-builder.Services.AddSingleton<IBlazorTestService, ServerTestService>();
-builder.Services.AddScoped<ILoginProvider, WebLoginProvider>();
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-	app.UseWebAssemblyDebugging();
-}
-else
-{
-	app.UseExceptionHandler("/Error", true);
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-	app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-app.UseAntiforgery();
-
-app.MapRazorComponents<App>()
-	.AddInteractiveServerRenderMode()
-	.AddInteractiveWebAssemblyRenderMode()
-	.AddAdditionalAssemblies(typeof(BlazorApp.Shared._Imports).Assembly);
-
-
+var app = builder.Build();
 
 app.AddAppSettings();
 
