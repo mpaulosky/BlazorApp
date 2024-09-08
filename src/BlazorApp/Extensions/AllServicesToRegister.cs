@@ -22,7 +22,6 @@ public static class AllServicesToRegister
 	///   Configures the services method.
 	/// </summary>
 	/// <param name="builder">The builder.</param>
-	/// <param name="config">ConfigurationManager</param>
 	[ExcludeFromCodeCoverage]
 	public static void ConfigureServices(this WebApplicationBuilder builder)
 	{
