@@ -64,10 +64,9 @@ public class UserInfoTests : TestContext
 		// Arrange
 
 		const string expected =
-				<h1>Welcome TEST USER</h1>
-				<p>State: Not authorized</p>
-				<p>State: Not authorized</p>
-				<p>State: Not authorized</p>
+			"""
+			<span class="umauthorized">Please log in!</span>
+
 			""";
 
 		var authContext = this.AddTestAuthorization();
