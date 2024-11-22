@@ -11,7 +11,7 @@
 		<ProjectReference Include="..\BlazorApp.Shared\BlazorApp.Shared.csproj" />
 		<PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
 		<PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.11" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.11" />
 	</ItemGroup>
 
