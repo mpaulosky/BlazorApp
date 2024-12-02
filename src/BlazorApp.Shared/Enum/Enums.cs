@@ -21,15 +21,16 @@ public class Enums
 		User
 	}
 
-
 	/// <summary>
-	///   Status enum
+	/// Category enum
 	/// </summary>
-	internal enum Status
+	public enum CategoryNames
 	{
-		Answered,
-		Watching,
-		Dismissed,
-		InWork
+		AspNetCore = 0,
+		BlazorServer = 1,
+		BlazorWasm = 2,
+		EntityFrameworkCore = 3,
+		NetMaui = 4,
+		Other = 5
 	}
 }
